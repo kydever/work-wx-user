@@ -11,12 +11,16 @@ declare(strict_types=1);
  */
 namespace KY\WorkWxUser;
 
+use EasyWeChat\Work\Application;
+use KY\WorkWxUser\WeChat\WeChatFactory;
+
 class ConfigProvider
 {
     public function __invoke(): array
     {
         return [
             'dependencies' => [
+                Application::class => WeChatFactory::class,
             ],
             'commands' => [
             ],
