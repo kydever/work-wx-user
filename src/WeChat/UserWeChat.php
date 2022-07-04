@@ -13,6 +13,7 @@ namespace KY\WorkWxUser\WeChat;
 
 use EasyWeChat\Work\Application;
 use GuzzleHttp\RequestOptions;
+use JetBrains\PhpStorm\ArrayShape;
 
 class UserWeChat
 {
@@ -20,6 +21,7 @@ class UserWeChat
     {
     }
 
+    #[ArrayShape(['userid' => ''])]
     public function infoByUserid(string $userid): array
     {
         return $this->wx->getClient()->get('/cgi-bin/user/get', [

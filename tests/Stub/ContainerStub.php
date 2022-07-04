@@ -20,6 +20,7 @@ use Hyperf\Utils\Codec\Json;
 use KY\WorkWxUser\WeChat\WeChatFactory;
 use Mockery;
 use Psr\Container\ContainerInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
@@ -73,6 +74,8 @@ class ContainerStub
             }
             return (new WeChatFactory())($container);
         });
+
+        $container->shouldReceive('get')->with(EventDispatcherInterface::class)->andReturnNull();
 
         ApplicationContext::setContainer($container);
 

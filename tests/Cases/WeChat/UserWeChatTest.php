@@ -14,6 +14,7 @@ namespace HyperfTest\Cases\WeChat;
 use EasyWeChat\Work\Application;
 use HyperfTest\Cases\AbstractTestCase;
 use HyperfTest\Stub\ContainerStub;
+use KY\WorkWxUser\Translator\UserTranslator;
 use KY\WorkWxUser\WeChat\UserWeChat;
 
 /**
@@ -29,6 +30,17 @@ class UserWeChatTest extends AbstractTestCase
         $res = $service->infoByUserid($this->getStub()['userid']);
 
         $this->assertSame('ok', $res['errmsg']);
+    }
+
+    public function testTranslateToUser()
+    {
+        $service = $this->getService();
+
+        $res = $service->infoByUserid($this->getStub()['userid']);
+
+        $user = (new UserTranslator())->translate($res);
+
+        $this->assertSame(true, $user->departments->list[0]->isLeader);
     }
 
     protected function getService()
