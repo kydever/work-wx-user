@@ -17,6 +17,12 @@ use Hyperf\Command\Command as BaseCommand;
 #[Command]
 class SyncMigrationCommand extends BaseCommand
 {
+    public function __construct()
+    {
+        parent::__construct('sync:work-wx-migrations');
+        $this->setDescription('同步所需的迁移文件到项目中');
+    }
+
     public function handle()
     {
         
