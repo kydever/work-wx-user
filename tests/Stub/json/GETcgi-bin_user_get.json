@@ -1,0 +1,48 @@
+{
+    "errcode": 0,
+    "errmsg": "ok",
+    "userid": "18600000527",
+    "name": "李小龙",
+    "department": [
+        27,
+        4
+    ],
+    "position": "技术部副总监",
+    "mobile": "18600000527",
+    "gender": "1",
+    "email": "xiaolong@qq.com",
+    "avatar": "https://avatars.githubusercontent.com/u/81892392?s=200&v=4",
+    "status": 1,
+    "isleader": 1,
+    "extattr": {
+        "attrs": []
+    },
+    "telephone": "",
+    "enable": 1,
+    "hide_mobile": 0,
+    "order": [
+        0,
+        0
+    ],
+    "external_profile": {
+        "external_attr": [],
+        "external_corp_name": "",
+        "wechat_channels": {
+            "nickname": "QQ",
+            "status": 0
+        }
+    },
+    "main_department": 4,
+    "qr_code": "",
+    "alias": "小龙",
+    "is_leader_in_dept": [
+        1,
+        1
+    ],
+    "address": "",
+    "thumb_avatar": "https://avatars.githubusercontent.com/u/81892392?s=200&v=4",
+    "direct_leader": [
+        "mahuateng"
+    ],
+    "biz_mail": "xiaolong@qq.com"
+}
