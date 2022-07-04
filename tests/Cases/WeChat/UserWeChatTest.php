@@ -11,12 +11,30 @@ declare(strict_types=1);
  */
 namespace HyperfTest\Cases\WeChat;
 
-use PHPUnit\Framework\TestCase;
+use EasyWeChat\Work\Application;
+use HyperfTest\Cases\AbstractTestCase;
+use HyperfTest\Stub\ContainerStub;
+use KY\WorkWxUser\WeChat\UserWeChat;
 
 /**
  * @internal
  * @coversNothing
  */
-class UserWeChatTest extends TestCase
+class UserWeChatTest extends AbstractTestCase
 {
+    public function testInfoByUserid()
+    {
+        $service = $this->getService();
+
+        $res = $service->infoByUserid($this->getStub()['userid']);
+
+        $this->assertSame('ok', $res['errmsg']);
+    }
+
+    protected function getService()
+    {
+        $container = ContainerStub::mockContainer();
+
+        return new UserWeChat($container->get(Application::class));
+    }
 }

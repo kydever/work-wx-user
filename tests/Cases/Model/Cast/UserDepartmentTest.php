@@ -11,14 +11,14 @@ declare(strict_types=1);
  */
 namespace HyperfTest\Cases\Model\Cast;
 
+use HyperfTest\Cases\AbstractTestCase;
 use KY\WorkWxUser\Model\Cast\UserDepartment;
-use PHPUnit\Framework\TestCase;
 
 /**
  * @internal
  * @coversNothing
  */
-class UserDepartmentTest extends TestCase
+class UserDepartmentTest extends AbstractTestCase
 {
     public function testJsonEncodeAndDecode()
     {

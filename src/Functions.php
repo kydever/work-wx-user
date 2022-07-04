@@ -13,8 +13,6 @@ namespace KY\WorkWxUser;
 
 use Hyperf\Utils\ApplicationContext;
 
-function di()
-{
     function di(?string $id = null)
     {
         $container = ApplicationContext::getContainer();
@@ -24,4 +22,3 @@ function di()
 
         return $container;
     }
-}
