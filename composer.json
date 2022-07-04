@@ -21,6 +21,7 @@
     },
     "require": {
         "php": ">=8.0",
+        "hyperf/command": "3.0.*",
         "hyperf/db-connection": "3.0.*"
     },
     "require-dev": {
