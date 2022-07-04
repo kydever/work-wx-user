@@ -12,7 +12,11 @@
     "autoload": {
         "psr-4": {
             "KY\\WorkWxUser\\": "src/"
-        }
+        },
+        "files": [
+            "./src/Functions.php",
+            "./src/WeChat/Functions.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
