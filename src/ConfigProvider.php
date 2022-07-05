@@ -22,13 +22,19 @@ class ConfigProvider
             'dependencies' => [
                 Application::class => WeChatFactory::class,
             ],
-            'commands' => [
-            ],
             'annotations' => [
                 'scan' => [
                     'paths' => [
                         __DIR__,
                     ],
+                ],
+            ],
+            'publish' => [
+                [
+                    'id' => 'config',
+                    'description' => '企业微信用户系统的配置',
+                    'source' => __DIR__ . '/../publish/work_wx_user.php',
+                    'destination' => BASE_PATH . '/config/autoload/work_wx_user.php',
                 ],
             ],
         ];
