@@ -9,16 +9,15 @@ declare(strict_types=1);
  * @contact  l@hyperf.io
  * @license  https://github.com/kydever/work-wx-user/blob/main/LICENSE
  */
-namespace KY\WorkWxUser;
+namespace KY\WorkWxUser\Dao;
 
-use Hyperf\Utils\ApplicationContext;
+use Han\Utils\Service;
+use KY\WorkWxUser\Model\Department;
 
-function di(?string $id = null)
+class DepartmentDao extends Service
 {
-    $container = ApplicationContext::getContainer();
-    if ($id) {
-        return $container->get($id);
+    public function first(int $id): ?Department
+    {
+        return Department::findFromCache($id);
     }
-
-    return $container;
 }

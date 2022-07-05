@@ -12,7 +12,9 @@ declare(strict_types=1);
 namespace KY\WorkWxUser;
 
 use Han\Utils\Service;
+use KY\WorkWxUser\Dao\DepartmentDao;
 use KY\WorkWxUser\Dao\UserDao;
+use KY\WorkWxUser\Model\Department;
 use KY\WorkWxUser\Translator\UserTranslator;
 use KY\WorkWxUser\WeChat\DepartmentWeChat;
 use KY\WorkWxUser\WeChat\UserWeChat;
@@ -27,6 +29,17 @@ class UserService extends Service
             $id = $item['id'];
             $name = $item['name'];
             $parentId = $item['parentid'];
+
+            $department = di()->get(DepartmentDao::class)->first($id);
+            if (! $department) {
+                $department = new Department();
+                $department->id = $id;
+            }
+
+            $department->name = $name;
+            $department->parent_id = $parentId;
+            $department->save();
+
             $departmentIds[] = $id;
             if (in_array($parentId, $departmentIds)) {
                 continue;
