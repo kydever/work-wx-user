@@ -11,6 +11,7 @@ declare(strict_types=1);
  */
 namespace KY\WorkWxUser;
 
+use Hyperf\Context\Context;
 use Hyperf\Redis\Redis;
 use Hyperf\Utils\Codec\Json;
 use KY\WorkWxUser\Exception\TokenInvalidException;
@@ -51,26 +52,32 @@ class UserAuth implements \JsonSerializable
 
     public static function load(string $token): static
     {
+        $user = new static(0, '');
         $json = di()->get(Redis::class)->get(self::token($token));
-        if (! $json) {
-            return new static(0, '');
+        if ($json && $data = Json::decode($json)) {
+            $user = new static($data['id'] ?? 0, $token);
         }
 
-        $data = Json::decode($json);
+        Context::set(UserAuth::class, $user);
 
-        try {
-            return new static($data['id'], $token);
-        } catch (\Throwable) {
-            return new static(0, '');
-        }
+        return $user;
+    }
+
+    public static function get(): static
+    {
+        return Context::getOrSet(
+            UserAuth::class,
+            static function () {
+                return new static(0, '');
+            }
+        );
     }
 
     public function save(): bool
     {
         $json = Json::encode($this);
-        $token = $this->id . '_' . md5(uniqid());
 
-        return di()->get(Redis::class)->set(self::token($token), $json, 86400 * 2);
+        return di()->get(Redis::class)->set(self::token($this->token), $json, 86400 * 2);
     }
 
     private static function token(string $token): string
