@@ -29,6 +29,16 @@ class UserWeChat
         ])->toArray();
     }
 
+    public function listByDepartmentId(int $departmentId, bool $fetchChild = false): array
+    {
+        return $this->wx->getClient()->get('/cgi-bin/user/list', [
+            RequestOptions::QUERY => [
+                'department_id' => $departmentId,
+                'fetch_child' => (int) $fetchChild,
+            ],
+        ])->toArray();
+    }
+
     public function getUserInfo(string $code): array
     {
         $user = $this->wx->getOAuth()->userFromCode($code);

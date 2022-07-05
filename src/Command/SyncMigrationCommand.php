@@ -22,7 +22,7 @@ class SyncMigrationCommand extends BaseCommand
 {
     public function __construct(private ContainerInterface $container)
     {
-        parent::__construct('sync:work-wx-migrations');
+        parent::__construct('work:wx:sync-migrations');
         $this->setDescription('同步所需的迁移文件到项目中');
     }
 

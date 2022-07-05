@@ -12,10 +12,12 @@ declare(strict_types=1);
 namespace KY\WorkWxUser\Dao;
 
 use Han\Utils\Service;
+use KY\WorkWxUser\Model\User;
 
 class UserDao extends Service
 {
-    public function first()
+    public function firstByUserid(string $userid): ?User
     {
+        return User::query()->where('userid', $userid)->first();
     }
 }
