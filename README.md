@@ -9,3 +9,11 @@
 ```
 composer require kydev/work-wx-user
 ```
+
+## 使用
+
+### 登录
+
+### 验证登录态
+
+
