@@ -14,7 +14,7 @@ namespace KY\WorkWxUser\WeChat;
 use EasyWeChat\Work\Application;
 use GuzzleHttp\RequestOptions;
 
-class UserWeChat
+class UserWeChat extends Api
 {
     public function __construct(protected Application $wx)
     {
@@ -22,21 +22,25 @@ class UserWeChat
 
     public function infoByUserid(string $userid): array
     {
-        return $this->wx->getClient()->get('/cgi-bin/user/get', [
+        $result = $this->wx->getClient()->get('/cgi-bin/user/get', [
             RequestOptions::QUERY => [
                 'userid' => $userid,
             ],
         ])->toArray();
+
+        return $this->format($result);
     }
 
     public function listByDepartmentId(int $departmentId, bool $fetchChild = false): array
     {
-        return $this->wx->getClient()->get('/cgi-bin/user/list', [
+        $result = $this->wx->getClient()->get('/cgi-bin/user/list', [
             RequestOptions::QUERY => [
                 'department_id' => $departmentId,
                 'fetch_child' => (int) $fetchChild,
             ],
         ])->toArray();
+
+        return $this->format($result);
     }
 
     public function getUserInfo(string $code): array

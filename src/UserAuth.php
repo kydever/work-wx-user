@@ -15,10 +15,13 @@ use Hyperf\Context\Context;
 use Hyperf\Redis\Redis;
 use Hyperf\Utils\Codec\Json;
 use KY\WorkWxUser\Exception\TokenInvalidException;
+use KY\WorkWxUser\Model\User;
 
 class UserAuth implements \JsonSerializable
 {
     public const AUTH_TOKEN = 'work-wx-token';
+
+    protected ?User $user = null;
 
     public function __construct(protected int $id, protected string $token)
     {
@@ -29,6 +32,17 @@ class UserAuth implements \JsonSerializable
         return [
             'id' => $this->id,
         ];
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
+        return $this;
     }
 
     public function getId(): int

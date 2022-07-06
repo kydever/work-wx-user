@@ -12,7 +12,74 @@ composer require kydev/work-wx-user
 
 ## 使用
 
+### 发布配置
+
+```shell
+php bin/hyperf.php vendor:publish kydev/work-wx-user
+```
+
 ### 登录
+
+创建控制器
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Controller;
+
+use Hyperf\Di\Annotation\Inject;
+use KY\WorkWxUser\Request\AuthorizeRequest;
+use KY\WorkWxUser\UserService;
+use KY\WorkWxUser\WeChat\WeChat;
+
+class OAuthController extends Controller
+{
+    #[Inject]
+    protected WeChat $wx;
+
+    #[Inject]
+    protected UserService $service;
+
+    public function authorize(AuthorizeRequest $request)
+    {
+        $url = (string) $request->input('redirect_uri');
+        $state = (string) $request->input('state');
+
+        $redirectUrl = $this->wx->authorize($url, $state);
+
+        return $this->response->redirect($redirectUrl);
+    }
+
+    public function login()
+    {
+        $code = $this->request->input('code');
+
+        $result = $this->service->login($code);
+
+        return $this->response->success([
+            'token' => $result->getToken(),
+            'user' => $result->getUser()->toArray(),
+        ]);
+    }
+}
+
+```
+
+增加路由
+
+```php
+<?php
+
+Router::get('/oauth/authorize', [App\Controller\OAuthController::class, 'authorize']);
+Router::get('/oauth/login', [App\Controller\OAuthController::class, 'login']);
+Router::post('/oauth/login', [App\Controller\OAuthController::class, 'login']);
+```
+
+浏览器访问以下地址，并扫码
+
+http://127.0.0.1:9501/oauth/authorize?state=STATE&redirect_uri=http://127.0.0.1:9501/oauth/login
 
 ### 验证登录态
 

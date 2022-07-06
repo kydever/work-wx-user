@@ -30,6 +30,7 @@
         "hyperf/http-server": "3.0.*",
         "hyperf/model-cache": "3.0.*",
         "hyperf/redis": "3.0.*",
+        "hyperf/validation": "3.0.*",
         "limingxinleo/easywechat-classmap": "^1.0",
         "limingxinleo/hyperf-utils": "^3.3",
         "w7corp/easywechat": "^6.7"

@@ -14,7 +14,7 @@ namespace KY\WorkWxUser\WeChat;
 use EasyWeChat\Work\Application;
 use GuzzleHttp\RequestOptions;
 
-class DepartmentWeChat
+class DepartmentWeChat extends Api
 {
     public function __construct(protected Application $wx)
     {
@@ -22,10 +22,12 @@ class DepartmentWeChat
 
     public function departments(int $id): array
     {
-        return $this->wx->getClient()->get('/cgi-bin/department/list', [
+        $result = $this->wx->getClient()->get('/cgi-bin/department/list', [
             RequestOptions::QUERY => [
                 'id' => $id,
             ],
         ])->toArray();
+
+        return $this->format($result);
     }
 }

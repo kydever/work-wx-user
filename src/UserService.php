@@ -15,7 +15,6 @@ use Han\Utils\Service;
 use KY\WorkWxUser\Dao\DepartmentDao;
 use KY\WorkWxUser\Dao\UserDao;
 use KY\WorkWxUser\Model\Department;
-use KY\WorkWxUser\Model\User;
 use KY\WorkWxUser\Translator\UserTranslator;
 use KY\WorkWxUser\WeChat\DepartmentWeChat;
 use KY\WorkWxUser\WeChat\UserWeChat;
@@ -55,14 +54,22 @@ class UserService extends Service
         }
     }
 
-    public function login(User $user): UserAuth
+    public function login(string $code): UserAuth
     {
+        $info = di()->get(UserWeChat::class)->getUserInfo($code);
+
+        $user = di()->get(UserDao::class)->firstByUserid($info['userid']);
+
+        $user = di()->get(UserTranslator::class)->translate($info, $user);
+
+        $user->save();
+
         $token = sprintf('%d_%s', $user->id, md5(uniqid()));
 
         $userAuth = new UserAuth($user->id, $token);
 
         $userAuth->save();
 
-        return $userAuth;
+        return $userAuth->setUser($user);
     }
 }
