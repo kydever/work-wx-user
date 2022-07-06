@@ -1,5 +1,7 @@
 # 企业微信用户系统组件
 
+[![PHPUnit](https://github.com/kydever/work-wx-user/actions/workflows/test.yml/badge.svg)](https://github.com/kydever/work-wx-user/actions/workflows/test.yml)
+
 ## 介绍
 
 基于 Hyperf 框架，快速搭建企业微信用户服务
