@@ -22,3 +22,15 @@ function di(?string $id = null)
 
     return $container;
 }
+
+/**
+ * 读取用户ID.
+ */
+function get_user_id(bool $build = true): int
+{
+    $userAuth = UserAuth::get();
+    if ($build) {
+        $userAuth->build();
+    }
+    return $userAuth->getId();
+}
