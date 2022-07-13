@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace KY\WorkWxUser\WeChat;
 
 use Hyperf\Contract\ConfigInterface;
+
 use function KY\WorkWxUser\di;
 
 function get_agent_id(): int

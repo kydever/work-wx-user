@@ -20,6 +20,8 @@ namespace KY\WorkWxUser\Model;
  */
 class Department extends Model
 {
+    public bool $incrementing = false;
+
     /**
      * The table associated with the model.
      */

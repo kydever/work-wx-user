@@ -14,6 +14,7 @@ namespace HyperfTest\Cases;
 use Hyperf\Contract\ConfigInterface;
 use Mockery;
 use PHPUnit\Framework\TestCase;
+
 use function KY\WorkWxUser\di;
 
 /**
