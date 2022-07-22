@@ -11,13 +11,11 @@ declare(strict_types=1);
  */
 namespace KY\WorkWxUser\Command;
 
-use Hyperf\Command\Annotation\Command;
 use Hyperf\Command\Command as BaseCommand;
 use Hyperf\Utils\Filesystem\Filesystem;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Finder\Finder;
 
-#[Command]
 class SyncMigrationCommand extends BaseCommand
 {
     public function __construct(private ContainerInterface $container)

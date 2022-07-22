@@ -11,14 +11,12 @@ declare(strict_types=1);
  */
 namespace KY\WorkWxUser\Command;
 
-use Hyperf\Command\Annotation\Command;
 use Hyperf\Command\Command as HyperfCommand;
 use KY\WorkWxUser\UserService;
 use KY\WorkWxUser\WeChat\DepartmentWeChat;
 use KY\WorkWxUser\WeChat\UserWeChat;
 use Psr\Container\ContainerInterface;
 
-#[Command]
 class WeChatCommand extends HyperfCommand
 {
     public function __construct(protected ContainerInterface $container)

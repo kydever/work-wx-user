@@ -12,6 +12,8 @@ declare(strict_types=1);
 namespace KY\WorkWxUser;
 
 use EasyWeChat\Work\Application;
+use KY\WorkWxUser\Command\SyncMigrationCommand;
+use KY\WorkWxUser\Command\WeChatCommand;
 use KY\WorkWxUser\WeChat\WeChatFactory;
 
 class ConfigProvider
@@ -19,6 +21,10 @@ class ConfigProvider
     public function __invoke(): array
     {
         return [
+            'commands' => [
+                SyncMigrationCommand::class,
+                WeChatCommand::class,
+            ],
             'dependencies' => [
                 Application::class => WeChatFactory::class,
             ],
