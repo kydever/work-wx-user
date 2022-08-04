@@ -13,12 +13,17 @@ namespace KY\WorkWxUser\WeChat;
 
 use EasyWeChat\Work\Application;
 use Han\Utils\Service;
-use Hyperf\Di\Annotation\Inject;
+use Psr\Container\ContainerInterface;
 
 class WeChat extends Service
 {
-    #[Inject]
     protected Application $wx;
+
+    public function __construct(ContainerInterface $container)
+    {
+        parent::__construct($container);
+        $this->wx = $container->get(Application::class);
+    }
 
     public function authorize(string $url, string $state): string
     {

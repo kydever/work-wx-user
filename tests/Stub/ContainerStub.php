@@ -12,8 +12,14 @@ declare(strict_types=1);
 namespace HyperfTest\Stub;
 
 use EasyWeChat\Work\Application;
+use Han\Utils\Factory;
+use Han\Utils\Utils\Date;
+use Han\Utils\Utils\Model;
+use Han\Utils\Utils\Sorter;
 use Hyperf\Config\Config;
 use Hyperf\Contract\ConfigInterface;
+use Hyperf\Contract\StdoutLoggerInterface;
+use Hyperf\ExceptionHandler\Formatter\FormatterInterface;
 use Hyperf\HttpServer\Contract\RequestInterface;
 use Hyperf\Utils\ApplicationContext;
 use Hyperf\Utils\Codec\Json;
@@ -21,6 +27,7 @@ use KY\WorkWxUser\WeChat\WeChatFactory;
 use Mockery;
 use Psr\Container\ContainerInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
+use Psr\Log\NullLogger;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
@@ -76,6 +83,13 @@ class ContainerStub
         });
 
         $container->shouldReceive('get')->with(EventDispatcherInterface::class)->andReturnNull();
+        $container->shouldReceive('get')->with(StdoutLoggerInterface::class)->andReturn(new NullLogger());
+        $container->shouldReceive('get')->with(Model::class)->andReturn(new Model());
+        $container->shouldReceive('get')->with(Date::class)->andReturn(new Date());
+        $container->shouldReceive('get')->with(Sorter::class)->andReturn(new Sorter());
+        $container->shouldReceive('get')->with(Factory::class)->andReturn($container);
+        $container->shouldReceive('has')->with(StdoutLoggerInterface::class)->andReturnTrue();
+        $container->shouldReceive('has')->with(FormatterInterface::class)->andReturnFalse();
 
         ApplicationContext::setContainer($container);
 
