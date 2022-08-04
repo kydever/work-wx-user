@@ -20,19 +20,19 @@ use function KY\WorkWxUser\di;
 
 class OAuth extends Service
 {
-    public function localOAuth(): string
+    public function localOAuth(string $localhost, int $port = 55274): string
     {
         $chan = new Channel(1);
         $server = new Server($this->logger);
-        go(function () use ($server, $chan) {
+        go(function () use ($server, $chan, $localhost, $port) {
             try {
-                $server->bind('0.0.0.0', $port = 55274);
+                $server->bind('0.0.0.0', $port);
 
                 $server->handle(static function (ServerRequestInterface $request) use ($chan) {
                     $chan->push($request->getQueryParams()['code'] ?? '');
                 });
 
-                $url = di()->get(WeChat::class)->authorize(urlencode('http://local-cmd-oauth.knowyourself.cc:' . $port . '/'), '');
+                $url = di()->get(WeChat::class)->authorize(sprintf('http://%s:%d/', $localhost, $port), '');
 
                 echo 'Please click the url below and login' . PHP_EOL;
                 echo $url . PHP_EOL;

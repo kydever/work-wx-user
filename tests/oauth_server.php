@@ -22,4 +22,4 @@ $container->shouldReceive('get')->with(WeChat::class)->andReturn(new WeChat($con
 
 $oauth = new OAuth($container);
 
-var_dump($code = $oauth->localOAuth());
+var_dump($code = $oauth->localOAuth('localhost'));
