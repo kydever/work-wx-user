@@ -65,7 +65,7 @@ class UserAuth implements \JsonSerializable
         throw new TokenInvalidException();
     }
 
-    public function check(): void
+    public function check(): static
     {
         $userId = $this->build()->getId();
 
@@ -76,6 +76,8 @@ class UserAuth implements \JsonSerializable
         }
 
         $this->setUser($user);
+
+        return $this;
     }
 
     public static function load(string $token): static
