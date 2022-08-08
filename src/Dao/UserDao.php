@@ -16,6 +16,11 @@ use KY\WorkWxUser\Model\User;
 
 class UserDao extends Service
 {
+    public function first(int $id): ?User
+    {
+        return User::findFromCache($id);
+    }
+
     public function firstByUserid(string $userid): ?User
     {
         return User::query()->where('userid', $userid)->first();

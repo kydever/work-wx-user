@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace KY\WorkWxUser;
 
 use Hyperf\Utils\ApplicationContext;
+use KY\WorkWxUser\Model\User;
 
 function di(?string $id = null)
 {
@@ -33,4 +34,13 @@ function get_user_id(bool $build = true): int
         $userAuth->build();
     }
     return $userAuth->getId();
+}
+
+/**
+ * 读取用户模型.
+ * 需要提前使用 UserAuth::get()->check() 进行模型赋值.
+ */
+function get_user(): ?User
+{
+    return UserAuth::get()->getUser();
 }

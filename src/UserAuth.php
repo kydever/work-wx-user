@@ -14,6 +14,7 @@ namespace KY\WorkWxUser;
 use Hyperf\Context\Context;
 use Hyperf\Redis\Redis;
 use Hyperf\Utils\Codec\Json;
+use KY\WorkWxUser\Dao\UserDao;
 use KY\WorkWxUser\Exception\TokenInvalidException;
 use KY\WorkWxUser\Model\User;
 
@@ -62,6 +63,19 @@ class UserAuth implements \JsonSerializable
         }
 
         throw new TokenInvalidException();
+    }
+
+    public function check(): void
+    {
+        $userId = $this->build()->getId();
+
+        $user = di()->get(UserDao::class)->first($userId);
+
+        if (! $user) {
+            throw new TokenInvalidException();
+        }
+
+        $this->setUser($user);
     }
 
     public static function load(string $token): static

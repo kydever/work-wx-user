@@ -11,7 +11,12 @@ declare(strict_types=1);
  */
 namespace KY\WorkWxUser\Model;
 
+use Carbon\Carbon;
 use KY\WorkWxUser\Model\Cast\UserDepartmentCaster;
+use KY\WorkWxUser\Translator\UserTranslator;
+use KY\WorkWxUser\WeChat\UserWeChat;
+
+use function KY\WorkWxUser\di;
 
 /**
  * @property int $id
@@ -44,4 +49,19 @@ class User extends Model
      * The attributes that should be cast to native types.
      */
     protected array $casts = ['departments' => UserDepartmentCaster::class, 'id' => 'integer', 'status' => 'integer', 'enable' => 'integer', 'created_at' => 'datetime', 'updated_at' => 'datetime'];
+
+    /**
+     * @param int $expiredSeconds 超时时间
+     */
+    public function freshFromApi(int $expiredSeconds): static
+    {
+        if ($this->updated_at->getTimestamp() + $expiredSeconds < time()) {
+            $info = di()->get(UserWeChat::class)->infoByUserid($this->userid);
+            $user = di()->get(UserTranslator::class)->translate($info, $this);
+            $user->updated_at = Carbon::now()->toDateTimeString();
+            $user->save();
+            return $user;
+        }
+        return $this;
+    }
 }
