@@ -24,7 +24,6 @@ use Hyperf\HttpServer\Contract\RequestInterface;
 use Hyperf\Utils\ApplicationContext;
 use Hyperf\Utils\Codec\Json;
 use KY\WorkWxUser\WeChat\WeChatFactory;
-use Mockery;
 use Psr\Container\ContainerInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\NullLogger;
@@ -35,7 +34,7 @@ class ContainerStub
 {
     public static function mockContainer(): ContainerInterface
     {
-        $container = Mockery::mock(ContainerInterface::class);
+        $container = \Mockery::mock(ContainerInterface::class);
         $container->shouldReceive('get')->with(ConfigInterface::class)->andReturnUsing(function () {
             $file = BASE_PATH . '/.env.json';
             if (file_exists($file)) {
@@ -64,10 +63,10 @@ class ContainerStub
             if ($isMockery) {
                 $config = $container->get(ConfigInterface::class)->get('work_wx_user');
                 $application = new Application($config);
-                $application->setHttpClient($client = Mockery::mock(HttpClientInterface::class));
+                $application->setHttpClient($client = \Mockery::mock(HttpClientInterface::class));
                 $client->shouldReceive('request')->withAnyArgs()->andReturnUsing(function (string $method, string $url, array $options) {
                     $path = __DIR__ . '/json/' . $method . str_replace('/', '_', $url) . '.json';
-                    $response = Mockery::mock(ResponseInterface::class);
+                    $response = \Mockery::mock(ResponseInterface::class);
                     $response->shouldReceive('toArray')->andReturn(
                         Json::decode(file_get_contents($path))
                     );

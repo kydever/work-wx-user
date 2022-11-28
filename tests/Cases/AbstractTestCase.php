@@ -12,7 +12,6 @@ declare(strict_types=1);
 namespace HyperfTest\Cases;
 
 use Hyperf\Contract\ConfigInterface;
-use Mockery;
 use PHPUnit\Framework\TestCase;
 
 use function KY\WorkWxUser\di;
@@ -24,7 +23,7 @@ abstract class AbstractTestCase extends TestCase
 {
     protected function tearDown(): void
     {
-        Mockery::close();
+        \Mockery::close();
     }
 
     /**

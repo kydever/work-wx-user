@@ -25,9 +25,9 @@ class UserTranslator
         }
         $user->name = $info['name'];
         $user->position = $info['position'];
-        $user->mobile = $info['mobile'] ?? '';
+        $user->mobile = $info['extattr']['attrs'][0]['value'] ?? '';
         $user->email = $info['biz_mail'] ?? $info['email'] ?? '';
-        $user->avatar = $info['thumb_avatar'] ?? $info['avatar'] ?? '';
+        $user->avatar = '';
         $user->status = $info['status'];
         $user->enable = $info['enable'];
         $user->alias = $info['alias'];
